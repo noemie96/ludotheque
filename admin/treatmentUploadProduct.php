@@ -3,12 +3,6 @@ session_start();
 if(!isset($_SESSION['login'])){
     header("LOCATION:403.php");
 }
-if(isset($_GET['id'])){
-    $id=htmlspecialchars($_GET['id']); // get car il est dans l'url de product
-}else{
-    header("LOCATION:articles.php");
-}
-
 
 if(isset($_POST['nom'])){
     $err=0;
@@ -33,13 +27,11 @@ if(isset($_POST['nom'])){
     }else{
         $err=4;
     }
-
     if(!empty($_POST['synopsis'])){
         $synopsis=htmlspecialchars($_POST['synopsis']);
     }else{
         $err=5;
     }
-
 
 
 
@@ -53,21 +45,22 @@ if(isset($_POST['nom'])){
                 ":tp"=>$type,
                 ":edit"=>$editeur,
                 ":suppo"=>$support,
-                ":synop"=>$synopsis
+                ":synop"=>$synopsis,
+                ":myid"=>$id
             ]);
             $upload->closeCursor();
-            header("LOCATION:articles.php?update=success");
+            header("LOCATION:articles.php?insert=success");
         }else{
+            $reqImg = $bdd->prepare("SELECT image FROM jeux WHERE id=?");
+                $reqImg->execute([$id]);
+                $donImg=$reqImg->fetch();
 
-            $reqImg= $bdd->prepare("SELECT * FROM jeux WHERE id=?");
-            $reqImg->execute(['$id']);
-            $donImg=$reqImg->fetch();
-
-            if(!empty($donImg['image'])){
-                unlink("../images/".$donImg['image']);
-                unlink("../images/mini_".$donImg['image']);
-            }
-            //traitement du fichier
+                if(!empty($donImg['image'])){
+                    unlink("../images/".$donImg['image']); // unlink supprimer un fichier  
+                    unlink("../images/mini_".$donImg['image']); // unlink supprimer un fichier  
+                }
+                       
+              //traitement du fichier
             $dossier = '../images/';
             $fichier = basename($_FILES['image']['name']);
             $taille_maxi = 2000000;
@@ -97,45 +90,46 @@ if(isset($_POST['nom'])){
                 $fichiercptl=rand().$fichier;
                 if(move_uploaded_file($_FILES['image']['tmp_name'], $dossier . $fichiercptl)) // la fonction renvoie True si l'upload à été realisé 
                 {
-                    $upload = $bdd->prepare("UPDATE jeux SET nom=:nom,type=:tp,image=:img,editeur=:edit,support=:suppo,synopsis=:synop WHERE id=:myid");
+                    $upload = $bdd->prepare("UPDATE jeux SET nom=:nom,type=:tp,editeur=:edit,support=:suppo,synopsis=:synop WHERE id=:myid");
                     $upload->execute([
                         ":nom"=>$nom,
                         ":tp"=>$type,
-                        ":img"=>$fichiercptl,
                         ":edit"=>$editeur,
                         ":suppo"=>$support,
                         ":synop"=>$synopsis,
                         ":myid"=>$id
-                  ]);
-                   $upload->closeCursor();
-                   if($extension==".png"){ // je verifie si c'est un png ou un jpg
-                    header("LOCATION: redimpng.php?image=".$fichiercptl);
-                }else{
-                    header("LOCATION: redim.php?image=".$fichiercptl);
-                }
+                    ]);
+                    $upload->closeCursor();
+
+                    if($extension==".png"){ // je verifie si c'est un png ou un jpg
+                        header("LOCATION: redimpng.php?image=".$fichiercptl);
+                    }else{
+                        header("LOCATION: redim.php?image=".$fichiercptl);
+                    }
+                    
                         
                 }
                 else //Sinon (la fonction renvoie FALSE).
                 {
-                    header("LOCATION:updateProduct.php?id=".$id."&error=1&upload=echec");
+                    header("LOCATION:updateProduct.php?error=1&upload=echec");
                 }
             }
             else
             {
-                header("LOCATION:updateProduct.php?id=".$id."&error=1&fich=".$erreur);
+                header("LOCATION:updateProduct.php?error=1&fich=".$erreur);
             }	
 
 
         }
     }else{
-        header("LOCATION:updateProduct.php?id=".$id."&err=".$err);
+        header("LOCATION:updateProduct.php?err=".$err);
     }
 
 
 
 
 }else{
-    header("LOCATION:updateProduct.php?id=".$id);
+    header("LOCATION:updateroduct.php");
 }
 
 

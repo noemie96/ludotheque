@@ -28,8 +28,10 @@ if(isset($_GET['search'])){
 <?php
     if(!empty($search)){
         require "connexion.php";
-        $req= $bdd->prepare("SELECT * FROM jeux WHERE nom=?");
-        $req->execute([$search]);
+        $req= $bdd->prepare("SELECT * FROM jeux WHERE nom LIKE :nom");
+        $req->execute([
+            ":nom" => "%".$search."%"
+            ]);
         $row = $req->rowCount();// permet de connaitre le nombre de résultat avec ma requete
         if($row!=0){
              while($don=$req->fetch()){
