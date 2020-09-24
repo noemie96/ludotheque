@@ -52,5 +52,7 @@ if(!isset($_SESSION['login'])){
     <input type="submit" value="Ajouter">
     </div>
     </form>
+    <br>
+<a href="articles.php">retour</a>
 </body>
 </html>

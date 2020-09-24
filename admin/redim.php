@@ -45,9 +45,9 @@ imagejpeg($destination,$rep_nom,80);
 
 // redirection
 if(isset($_GET['upload'])){
-    header("LOCATION:index.php?update=success&id=".$_GET['upload']);
+    header("LOCATION:articles.php?update=success&id=".$_GET['upload']);
 }else{
-    header("LOCATION:index.php?add=succes");
+    header("LOCATION:articles.php?add=succes");
 }
 
 ?>

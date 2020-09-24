@@ -32,10 +32,12 @@
     <div>Synopsis: <?= nl2br($don['synopsis'])?></div>
     <?php
     if(empty($don['image'])){
-        echo "pas d'image";
+        echo "<img src='images/default.jpg'>";
     }else{
-        echo "<img src='images/".$don['image']."'>";
+        echo "<img src='images/mini_".$don['image']."'>";
     }
 ?>
+<br>
+<a href="index.php">retour</a>
 </body>
 </html>

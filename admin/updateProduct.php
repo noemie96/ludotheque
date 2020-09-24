@@ -100,5 +100,7 @@ if(isset($_GET['id'])){
     <input type="submit" value="Modifier">
     </div>
     </form>
+    <br>
+<a href="articles.php">retour</a>
 </body>
 </html>

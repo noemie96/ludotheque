@@ -35,10 +35,9 @@
             echo "<tr>";
                 echo "<td>".$don['id']."</td>";
                 echo "<td>".$don['nom']."</td>";
-                echo "<td>".$don['type']."</td>";
-                echo "<td>".$don['editeur']."</td>";
+                
                 echo "<td>".$don['support']."</td>";
-                echo "<td>".$don['synopsis']."</td>";
+                
                 echo "<td>";
                     echo " <a href='updateProduct.php?id=".$don['id']."'>Modifier</a>";
                     echo " <a href='deleteProduct.php?id=".$don['id']."'>Supprimer</a>";
@@ -48,5 +47,7 @@
         $req->closeCursor();
     ?>
      </table>
+     <br>
+<a href="index.php">retour</a>
 </body>
 </html>

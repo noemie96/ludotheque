@@ -44,5 +44,7 @@ if(isset($_GET['search'])){
     }
 
 ?>
+<br>
+<a href="index.php">retour</a>
 </body>
 </html>
