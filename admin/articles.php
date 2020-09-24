@@ -4,9 +4,6 @@
      header("LOCATION:403.php");
  }
 
- 
-
-
 ?>
 
 
@@ -35,9 +32,7 @@
             echo "<tr>";
                 echo "<td>".$don['id']."</td>";
                 echo "<td>".$don['nom']."</td>";
-                
                 echo "<td>".$don['support']."</td>";
-                
                 echo "<td>";
                     echo " <a href='updateProduct.php?id=".$don['id']."'>Modifier</a>";
                     echo " <a href='deleteProduct.php?id=".$don['id']."'>Supprimer</a>";
