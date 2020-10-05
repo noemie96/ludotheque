@@ -2,7 +2,6 @@
 if(isset($_GET['search'])){
     $search=htmlspecialchars($_GET['search']);
     
-        
 }else{
     $search="";
 }
@@ -28,7 +27,7 @@ if(isset($_GET['search'])){
 <?php
     if(!empty($search)){
         require "connexion.php";
-        $req= $bdd->prepare("SELECT * FROM jeux WHERE nom LIKE :nom");
+        $req = $bdd->prepare("SELECT * FROM jeux WHERE nom LIKE :nom");
         $req->execute([
             ":nom" => "%".$search."%"
             ]);
